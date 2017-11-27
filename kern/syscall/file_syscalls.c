@@ -41,10 +41,10 @@ sys_open(const_userptr_t upath, int flags, mode_t mode, int *retval)
 	 * Check the design document design/filesyscall.txt for the steps
 	 */
 	
-	if((flags & allflags)  != allflags){
-		kprintf("\nBawal aaache babla re");
-		return EINVAL;
-	}
+	//if((flags & allflags)  != allflags){
+	//	kprintf("\nBawal aaache babla re");
+	//	return EINVAL;
+	//}
 	kpath = (char*)kmalloc(sizeof(char)*PATH_MAX);
 	result = copyinstr(upath, kpath, PATH_MAX, &act);
 	
