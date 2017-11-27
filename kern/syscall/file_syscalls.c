@@ -61,7 +61,7 @@ sys_open(const_userptr_t upath, int flags, mode_t mode, int *retval)
 		return result;
 	}
 
-	result = filetable_place(curproc->fdtable, file, retval);
+	result = filetable_place(curproc->p_filetable, file, retval);
 
 	if(result){
 		kfree(kpath);
