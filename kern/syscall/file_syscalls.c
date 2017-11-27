@@ -47,6 +47,7 @@ sys_open(const_userptr_t upath, int flags, mode_t mode, int *retval)
 	}
 	kpath = (char*)kmalloc(sizeof(char)*PATH_MAX);
 	result = copyinstr(upath, kpath, PATH_MAX, &act);
+	kprintf("\n%d". result);
 	
 	if(result){
 		kfree(kpath);
@@ -54,14 +55,14 @@ sys_open(const_userptr_t upath, int flags, mode_t mode, int *retval)
 	}
 
 	result = openfile_open(kpath, flags, mode, &file);
-	
+	kprintf("\n%d". result);
 	if(result){
 		kfree(kpath);
 		return result;
 	}
 
 	result = filetable_place(curproc->p_filetable, file, retval);
-
+	kprintf("\n%d". result);
 	if(result){
 		kfree(kpath);
 		return result;
