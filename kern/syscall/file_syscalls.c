@@ -32,6 +32,9 @@ sys_open(const_userptr_t upath, int flags, mode_t mode, int *retval)
 	char *kpath;
 	struct openfile *file;
 	int result = 0;
+	size_t act;
+	int ft_index = 3;
+	
 
 	/* 
 	 * Your implementation of system call open starts here.  
