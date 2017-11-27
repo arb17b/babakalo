@@ -115,7 +115,7 @@ int sys_close(int fd, int *retval){
 		return EBADF;
 	}
 
-	
+	(void) retval;
 	openfile_decref(*oldfile_ret);
 	return 0;
 	
