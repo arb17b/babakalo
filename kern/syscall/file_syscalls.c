@@ -28,7 +28,7 @@ int
 sys_open(const_userptr_t upath, int flags, mode_t mode, int *retval)
 {
 	const int allflags = O_ACCMODE | O_CREAT | O_EXCL | O_TRUNC | O_APPEND | O_NOCTTY;
-
+	
 	char *kpath;
 	struct openfile *file;
 	int result = 0;
@@ -38,13 +38,32 @@ sys_open(const_userptr_t upath, int flags, mode_t mode, int *retval)
 	 *
 	 * Check the design document design/filesyscall.txt for the steps
 	 */
-	(void) upath; // suppress compilation warning until code gets written
-	(void) flags; // suppress compilation warning until code gets written
-	(void) mode; // suppress compilation warning until code gets written
-	(void) retval; // suppress compilation warning until code gets written
-	(void) allflags; // suppress compilation warning until code gets written
-	(void) kpath; // suppress compilation warning until code gets written
-	(void) file; // suppress compilation warning until code gets written
+	
+	if((flags & allflags)  != allflags){
+		kprintf("\nBawal aaache babla re");
+		return EINVAL;
+	}
+	kpath = (char*)kmalloc(sizeof(char)*PATH_MAX);
+	result = copyinstr(upath, kpath, PATH_MAX, &act);
+	
+	if(result){
+		kfree(kpath);
+		return result;
+	}
+
+	result = openfile_open(file, flags, mode, &file);
+	
+	if(result){
+		kfree(kpath);
+		return result;
+	}
+
+	result = filetable_place(curproc->fdtable, file, &retval);
+
+	if(result){
+		kfree(kpath);
+		return result;
+	}
 
 	return result;
 }
@@ -62,6 +81,7 @@ sys_read(int fd, userptr_t buf, size_t size, int *retval)
         *
         * Check the design document design/filesyscall.txt for the steps
         */
+	
        (void) fd; // suppress compilation warning until code gets written
        (void) buf; // suppress compilation warning until code gets written
        (void) size; // suppress compilation warning until code gets written
