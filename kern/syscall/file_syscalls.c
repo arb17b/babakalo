@@ -101,6 +101,26 @@ sys_read(int fd, userptr_t buf, size_t size, int *retval)
  * close() - remove from the file table.
  */
 
+int sys_close(int fd, int *retval){
+	
+	struct openfile **oldfile_ret
+		
+	if(filetable_okfd(curproc->p_filetable, fd) {
+		//kprintf("CLOSE- Bad filehandle\n");
+		return EBADF;
+	}
+	   
+	if(filetable_placeat(curproc->p_filetable, NULL, fd,oldfile_ret)){
+		//kprintf("CLOSE- Bad filehandle\n");
+		return EBADF;
+	}
+
+	
+	openfile_decref(*oldfile_ret);
+	return 0;
+	
+}
+
 /* 
 * meld () - combine the content of two files word by word into a new file
 */
