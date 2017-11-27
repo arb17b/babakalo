@@ -33,7 +33,6 @@ sys_open(const_userptr_t upath, int flags, mode_t mode, int *retval)
 	struct openfile *file;
 	int result = 0;
 	size_t act;
-	int ft_index = 3;
 	
 
 	/* 
