@@ -54,7 +54,7 @@ sys_open(const_userptr_t upath, int flags, mode_t mode, int *retval)
 		return result;
 	}
 
-	result = openfile_open(file, flags, mode, &file);
+	result = openfile_open(kpath, flags, mode, &file);
 	
 	if(result){
 		kfree(kpath);
