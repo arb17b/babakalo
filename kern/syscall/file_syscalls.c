@@ -101,7 +101,8 @@ sys_read(int fd, userptr_t buf, size_t size, int *retval)
  * close() - remove from the file table.
  */
 
-int sys_close(int fd, int *retval){
+int 
+sys_close(int fd, int *retval){
 	
 	struct openfile **oldfile_ret;
 		
