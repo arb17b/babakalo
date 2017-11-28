@@ -104,18 +104,18 @@ sys_read(int fd, userptr_t buf, size_t size, int *retval)
 int 
 sys_close(int fd, int *retval){
 	
-	struct openfile **oldfile_ret;
+	struct openfile *oldfile_ret;
 		
 	if(filetable_okfd(curproc->p_filetable, fd)) {
 		//kprintf("CLOSE- Bad filehandle\n");
 		return EBADF;
 	}
 	   
-	filetable_placeat(curproc->p_filetable, NULL, fd,oldfile_ret);
+	filetable_placeat(curproc->p_filetable, NULL, fd, &oldfile_ret);
 
 
 	(void) retval;
-	openfile_decref(*oldfile_ret);
+	openfile_decref(oldfile_ret);
 	return 0;
 	
 }
