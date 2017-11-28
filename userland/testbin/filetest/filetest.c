@@ -68,13 +68,17 @@ main(int argc, char *argv[])
 		err(1, "%s: open for write", file);
 	}
 
-
+	kprintf("\nWHYWHYWHYWHYWHY);
 	/*rv = write(fd, writebuf, 40);
+	kprintf("\nWHYWHYWHYWHYWHY);
 	if (rv<0) {
+	kprintf("\nWHYWHYWHYWHYWHY);
 		err(1, "%s: write", file);
 	}
 	*/
+	kprintf("\nWHYWHYWHYWHYWHY);
 	rv = close(fd);
+	kprintf("\nWHYWHYWHYWHYWHY);
 	if (rv<0) {
 		err(1, "%s: close (1st time)", file);
 	}
