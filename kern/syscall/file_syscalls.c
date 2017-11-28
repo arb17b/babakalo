@@ -111,7 +111,7 @@ sys_close(int fd, int *retval){
 		return EBADF;
 	}
 	   
-	filetable_placeat(curproc->p_filetable, NULL, fd,oldfile_ret));
+	filetable_placeat(curproc->p_filetable, NULL, fd,oldfile_ret);
 
 
 	(void) retval;
