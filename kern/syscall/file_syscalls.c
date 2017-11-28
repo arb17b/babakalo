@@ -113,8 +113,6 @@ sys_close(int fd){
 	   
 	filetable_placeat(curproc->p_filetable, NULL, fd, &oldfile_ret);
 
-
-	(void) retval;
 	openfile_decref(oldfile_ret);
 	return 0;
 	
