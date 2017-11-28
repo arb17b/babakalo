@@ -102,7 +102,7 @@ sys_read(int fd, userptr_t buf, size_t size, int *retval)
  */
 
 int 
-sys_close(int fd, int *retval){
+sys_close(int fd){
 	
 	struct openfile *oldfile_ret;
 		
