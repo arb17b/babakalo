@@ -111,10 +111,8 @@ sys_close(int fd, int *retval){
 		return EBADF;
 	}
 	   
-	if(filetable_placeat(curproc->p_filetable, NULL, fd,oldfile_ret)){
-		//kprintf("CLOSE- Bad filehandle\n");
-		return EBADF;
-	}
+	filetable_placeat(curproc->p_filetable, NULL, fd,oldfile_ret));
+
 
 	(void) retval;
 	openfile_decref(*oldfile_ret);
