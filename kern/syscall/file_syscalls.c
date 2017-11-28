@@ -105,14 +105,14 @@ int
 sys_close(int fd){
 	
 	struct openfile *oldfile_ret;
-	printf("\nSHHSHS");
+	kprintf("\nSHHSHS");
 	if(filetable_okfd(curproc->p_filetable, fd)) {
 		//kprintf("CLOSE- Bad filehandle\n");
 		return EBADF;
 	}
-	printf("\nSHHSHS");
+	kprintf("\nSHHSHS");
 	filetable_placeat(curproc->p_filetable, NULL, fd, &oldfile_ret);
-	printf("\nSHHSHS");
+	kprintf("\nSHHSHS");
 	openfile_decref(oldfile_ret);
 	return 0;
 	
