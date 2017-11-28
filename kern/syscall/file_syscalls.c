@@ -103,7 +103,7 @@ sys_read(int fd, userptr_t buf, size_t size, int *retval)
 
 int sys_close(int fd, int *retval){
 	
-	struct openfile **oldfile_ret
+	struct openfile **oldfile_ret;
 		
 	if(filetable_okfd(curproc->p_filetable, fd)) {
 		//kprintf("CLOSE- Bad filehandle\n");
