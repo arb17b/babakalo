@@ -92,9 +92,6 @@ sys_read(int fd, userptr_t buf, size_t size, int *retval)
 	   return result;
 	}
 	
-	if(!VOP_ISSEEKABLE(file->of_vnode)){
-		lock_acquire(file->of_offsetlock);
-	}
 	
 	
 	if(file->of_accmode == O_WRONLY){
@@ -108,9 +105,6 @@ sys_read(int fd, userptr_t buf, size_t size, int *retval)
 	reader.uio_space = curproc->p_addrspace;
 	result = VOP_READ(file->of_vnode, &reader);
 	*retval = size - reader.uio_resid;
-	if(!VOP_ISSEEKABLE(file->of_vnode)){
-		lock_release(file->of_offsetlock);
-	}
 	filetable_put(curproc->p_filetable,fd, file);
 
        return result;
@@ -138,11 +132,6 @@ sys_write(int fd, userptr_t buf, size_t size, int *retval)
 	   return result;
 	}
 	
-	if(!VOP_ISSEEKABLE(file->of_vnode)){
-		lock_acquire(file->of_offsetlock);
-	}
-	
-	
 	if(file->of_accmode == O_RDONLY){
 		kprintf("\nBnara file khulechish write er jonno be!");
 		return 1;
@@ -154,9 +143,6 @@ sys_write(int fd, userptr_t buf, size_t size, int *retval)
 	reader.uio_space = curproc->p_addrspace;
 	result = VOP_WRITE(file->of_vnode, &reader);
 	*retval = size - reader.uio_resid;
-	if(!VOP_ISSEEKABLE(file->of_vnode)){
-		lock_release(file->of_offsetlock);
-	}
 	filetable_put(curproc->p_filetable,fd, file);
 
        return result;
