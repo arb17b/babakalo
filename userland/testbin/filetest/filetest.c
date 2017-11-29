@@ -90,21 +90,6 @@ main(int argc, char *argv[])
 	}
 
 	rv = close(fd);
-	printf("Closing fd=%d retval=%d.\n", fd, rv);
-	if (rv<0) {
-		err(1, "%s: close (2nd time)", file);
-	}
-	/* ensure null termination */
-	readbuf[40] = 0;
 
-	if (strcmp(readbuf, writebuf)) {
-		errx(1, "Buffer data mismatch!");
-	}
-
-/*	rv = remove(file);
-	if (rv<0) {
-		err(1, "%s: remove", file);
-	} */
-	printf("Passed filetest.\n");
 	return 0;
 }
