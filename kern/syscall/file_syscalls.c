@@ -138,7 +138,7 @@ sys_write(int fd, userptr_t buf, size_t size, int *retval)
 	}
 	struct uio reader;
 	struct iovec io;
-	uio_kinit(&io, &reader, &buf, size, file->of_offset, UIO_READ);
+	uio_kinit(&io, &reader, &buf, size, file->of_offset, UIO_WRITE);
 	reader.uio_segflg = UIO_USERSPACE;
 	reader.uio_space = curproc->p_addrspace;
 	result = VOP_WRITE(file->of_vnode, &reader);
