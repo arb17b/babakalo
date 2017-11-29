@@ -108,7 +108,7 @@ sys_read(int fd, userptr_t buf, size_t size, int *retval)
 	reader->uio_segflg = UIO_USERSPACE;
 	reader->uio_space = curproc->p_addrspace;
 	result = vop_read(file->of_vnode, reader);
-	*retval = size - kuio.uio_resid;
+	*retval = size - reader->uio_resid;
 	lock_release(file->of_offsetlock);
 	filetable_put(curproc->p_filetable,fd, file);
 
