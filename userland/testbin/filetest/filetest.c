@@ -62,16 +62,16 @@ main(int argc, char *argv[])
 	else {
 		errx(1, "Usage: filetest <filename>");
 	}
-	kprintf("\nMY ASSSS");
+	printf("\nMY ASSSS");
 	fd = open(file, O_RDONLY);
 	rv = close(fd);
-	kprintf("\nMY ASSSS");
+	printf("\nMY ASSSS");
 	fd = open(file, O_WRONLY|O_CREAT|O_TRUNC, 0664);
 	if (fd<0) {
 		err(1, "%s: open for write", file);
 	}
 
-	kprintf("\nWHYWHYWHYWHYWHY);
+	printf("\nWHYWHYWHYWHYWHY);
 	/*rv = write(fd, writebuf, 40);
 	kprintf("\nWHYWHYWHYWHYWHY);
 	if (rv<0) {
@@ -79,9 +79,9 @@ main(int argc, char *argv[])
 		err(1, "%s: write", file);
 	}
 	*/
-	kprintf("\nWHYWHYWHYWHYWHY);
+	printf("\nWHYWHYWHYWHYWHY);
 	rv = close(fd);
-	kprintf("\nWHYWHYWHYWHYWHY);
+	printf("\nWHYWHYWHYWHYWHY);
 	if (rv<0) {
 		err(1, "%s: close (1st time)", file);
 	}
