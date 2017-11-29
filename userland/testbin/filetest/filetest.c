@@ -70,6 +70,6 @@ main(int argc, char *argv[])
 	fd = open(file, O_RDONLY);
 	rv = read(fd, readbuf, 40);
 	rv = close(fd);
-
+	(void)rv;
 	return 0;
 }
