@@ -79,6 +79,7 @@ sys_read(int fd, userptr_t buf, size_t size, int *retval)
 {
         int result = 0;
 	int pos;
+	bool locked;
        /* 
         * Your implementation of system call read starts here.  
         *
