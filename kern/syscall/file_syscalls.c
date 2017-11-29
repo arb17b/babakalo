@@ -143,7 +143,7 @@ sys_write(int fd, userptr_t buf, size_t size, int *retval)
 	}
 	
 	lock_acquire(file->of_offsetlock);
-	if(file->of_accmode == O_WRONLY){
+	if(file->of_accmode == O_RDONLY){
 		kprintf("\nBnara file khulechish write er jonno be!");
 		return 1;
 	}
