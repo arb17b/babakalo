@@ -108,7 +108,7 @@ sys_read(int fd, userptr_t buf, size_t size, int *retval)
 	}
 	struct uio reader;
 	struct iovec io;
-	uio_kinit(&io, &reader, &buf, size, pos, UIO_READ);
+	uio_kinit(&io, &reader, buf, size, pos, UIO_READ);
 	reader.uio_segflg = UIO_USERSPACE;
 	reader.uio_space = proc_getas();
 	result = VOP_READ(file->of_vnode, &reader);
@@ -163,7 +163,7 @@ sys_write(int fd, userptr_t buf, size_t size, int *retval)
 	}
 	struct uio reader;
 	struct iovec io;
-	uio_kinit(&io, &reader, &buf, size, pos, UIO_WRITE);
+	uio_kinit(&io, &reader, buf, size, pos, UIO_WRITE);
 	reader.uio_segflg = UIO_USERSPACE;
 	reader.uio_space = proc_getas();
 	result = VOP_WRITE(file->of_vnode, &reader);
