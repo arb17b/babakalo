@@ -108,13 +108,9 @@ sys_read(int fd, userptr_t buf, size_t size, int *retval)
 	reader->uio_segflg = UIO_USERSPACE;
 	reader->uio_space = curproc->p_addrspace;
 	result = vop_read(file->of_vnode, reader);
-	
-	   
-	
-       (void) fd; // suppress compilation warning until code gets written
-       (void) buf; // suppress compilation warning until code gets written
-       (void) size; // suppress compilation warning until code gets written
-       (void) retval; // suppress compilation warning until code gets written
+	*retval = size - kuio.uio_resid;
+	lock_release(file->of_offsetlock);
+	filetable_put(curproc->p_filetable,fd, file);
 
        return result;
 }
