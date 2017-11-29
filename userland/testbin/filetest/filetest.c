@@ -62,8 +62,7 @@ main(int argc, char *argv[])
 	else {
 		errx(1, "Usage: filetest <filename>");
 	}
-	fd = open(file, O_WRONLY|O_CREAT|O_TRUNC, 0664);
-	rv = close(fd);
+	kprintf("\nMY ASSSS");
 	fd = open(file, O_RDONLY);
 	rv = close(fd);
 	kprintf("\nMY ASSSS");
