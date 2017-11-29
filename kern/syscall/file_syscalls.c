@@ -107,7 +107,7 @@ sys_close(int fd){
 	struct openfile *oldfile_ret;
 	kprintf("\nSHHSHS");
 	if(filetable_okfd(curproc->p_filetable, fd)) {
-		//kprintf("CLOSE- Bad filehandle\n");
+		kprintf("CLOSE- Bad filehandle\n");
 		return EBADF;
 	}
 	kprintf("\nSHHSHS");
