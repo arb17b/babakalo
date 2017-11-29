@@ -62,56 +62,8 @@ main(int argc, char *argv[])
 	else {
 		errx(1, "Usage: filetest <filename>");
 	}
-	printf("\nMY ASSSS");
 	fd = open(file, O_RDONLY);
-	rv = close(fd);
-	printf("\nMY ASSSS");
-	fd = open(file, O_WRONLY|O_CREAT|O_TRUNC, 0664);
-	if (fd<0) {
-		err(1, "%s: open for write", file);
-	}
-
-	printf("\nWHYWHYWHYWHYWHY");
-	/*rv = write(fd, writebuf, 40);
-	kprintf("\nWHYWHYWHYWHYWHY);
-	if (rv<0) {
-	kprintf("\nWHYWHYWHYWHYWHY);
-		err(1, "%s: write", file);
-	}
-	*/
-	printf("\nWHYWHYWHYWHYWHY");
-	rv = close(fd);
-	printf("\nWHYWHYWHYWHYWHY");
-	if (rv<0) {
-		err(1, "%s: close (1st time)", file);
-	}
-
-	fd = open(file, O_RDONLY);
-	if (fd<0) {
-		err(1, "%s: open for read", file);
-	}
-
-	/*rv = read(fd, readbuf, 40);
-	if (rv<0) {
-		err(1, "%s: read", file);
-	}
-	*/
-	rv = close(fd);
-	printf("Closing fd=%d retval=%d.\n", fd, rv);
-	if (rv<0) {
-		err(1, "%s: close (2nd time)", file);
-	}
-	/* ensure null termination */
-	//readbuf[40] = 0;
-
-	//if (strcmp(readbuf, writebuf)) {
-	//	errx(1, "Buffer data mismatch!");
-	//}
-
-/*	rv = remove(file);
-	if (rv<0) {
-		err(1, "%s: remove", file);
-	} */
+	rv = read(fd, readbuf, 40);
 	printf("Passed filetest.\n");
 	return 0;
 }
