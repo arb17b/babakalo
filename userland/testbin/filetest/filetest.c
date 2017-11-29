@@ -64,6 +64,6 @@ main(int argc, char *argv[])
 	}
 	fd = open(file, O_RDONLY);
 	rv = close(fd);
-	printf("Passed filetest. with %d \n", rv);
+	//printf("Passed filetest. with %d \n", rv);
 	return 0;
 }
