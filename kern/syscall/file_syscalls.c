@@ -78,7 +78,7 @@ int
 sys_read(int fd, userptr_t buf, size_t size, int *retval)
 {
         int result = 0;
-
+	int pos;
        /* 
         * Your implementation of system call read starts here.  
         *
@@ -92,6 +92,13 @@ sys_read(int fd, userptr_t buf, size_t size, int *retval)
 	   return result;
 	}
 	
+	locked = VOP_ISSEEKABLE(file->of_vnode);
+	if(locked){
+		lock_acquire(file->of_offsetlock);
+		pos = file->of_offset;
+	}
+	else
+		pos = 0;
 	
 	
 	if(file->of_accmode == O_WRONLY){
@@ -100,12 +107,19 @@ sys_read(int fd, userptr_t buf, size_t size, int *retval)
 	}
 	struct uio reader;
 	struct iovec io;
-	uio_kinit(&io, &reader, &buf, size, file->of_offset, UIO_READ);
+	uio_kinit(&io, &reader, &buf, size, pos, UIO_READ);
 	reader.uio_segflg = UIO_USERSPACE;
-	reader.uio_space = curproc->p_addrspace;
+	reader.uio_space = proc_getas();
 	result = VOP_READ(file->of_vnode, &reader);
-	*retval = size - reader.uio_resid;
+	
+	if(locked){
+		file->of_offset = reader.uio_offset;
+		lock_release(file->of_offsetlock);
+	}
 	filetable_put(curproc->p_filetable,fd, file);
+	if(!result)
+		*retval = size - reader.uio_resid;
+	
 
        return result;
 }
@@ -116,9 +130,8 @@ sys_read(int fd, userptr_t buf, size_t size, int *retval)
 
 int
 sys_write(int fd, userptr_t buf, size_t size, int *retval)
-{
-        int result = 0;
-
+{int result = 0;
+	int pos;
        /* 
         * Your implementation of system call read starts here.  
         *
@@ -132,18 +145,34 @@ sys_write(int fd, userptr_t buf, size_t size, int *retval)
 	   return result;
 	}
 	
+	locked = VOP_ISSEEKABLE(file->of_vnode);
+	if(locked){
+		lock_acquire(file->of_offsetlock);
+		pos = file->of_offset;
+	}
+	else
+		pos = 0;
+	
+	
 	if(file->of_accmode == O_RDONLY){
 		kprintf("\nBnara file khulechish write er jonno be!");
 		return 1;
 	}
 	struct uio reader;
 	struct iovec io;
-	uio_kinit(&io, &reader, &buf, size, file->of_offset, UIO_WRITE);
+	uio_kinit(&io, &reader, &buf, size, pos, UIO_WRITE);
 	reader.uio_segflg = UIO_USERSPACE;
-	reader.uio_space = curproc->p_addrspace;
+	reader.uio_space = proc_getas();
 	result = VOP_WRITE(file->of_vnode, &reader);
-	*retval = size - reader.uio_resid;
+	
+	if(locked){
+		file->of_offset = reader.uio_offset;
+		lock_release(file->of_offsetlock);
+	}
 	filetable_put(curproc->p_filetable,fd, file);
+	if(!result)
+		*retval = size - reader.uio_resid;
+	
 
        return result;
 }
