@@ -119,6 +119,47 @@ sys_read(int fd, userptr_t buf, size_t size, int *retval)
  * write() - write data to a file
  */
 
+int
+sys_write(int fd, userptr_t buf, size_t size, int *retval)
+{
+        int result = 0;
+
+       /* 
+        * Your implementation of system call read starts here.  
+        *
+        * Check the design document design/filesyscall.txt for the steps
+        */
+	struct openfile* file;
+	result = filetable_get(curproc->p_filetable, fd, &file);
+	
+	if(result){
+	   kprintf("\nBawal aache");
+	   return result;
+	}
+	
+	if(!VOP_ISSEEKABLE(file->of_vnode)){
+		kprintf("\nBawal abar aache");
+		return 1;
+	}
+	
+	lock_acquire(file->of_offsetlock);
+	if(file->of_accmode == O_WRONLY){
+		kprintf("\nBnara file khulechish write er jonno be!");
+		return 1;
+	}
+	struct uio reader;
+	struct iovec io;
+	uio_kinit(&io, &reader, &buf, size, file->of_offset, UIO_READ);
+	reader.uio_segflg = UIO_USERSPACE;
+	reader.uio_space = curproc->p_addrspace;
+	result = VOP_WRITE(file->of_vnode, &reader);
+	*retval = size - reader.uio_resid;
+	lock_release(file->of_offsetlock);
+	filetable_put(curproc->p_filetable,fd, file);
+
+       return result;
+}
+
 /*
  * close() - remove from the file table.
  */
