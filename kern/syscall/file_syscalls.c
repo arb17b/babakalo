@@ -137,10 +137,7 @@ sys_write(int fd, userptr_t buf, size_t size, int *retval)
 	   return result;
 	}
 	
-	if(!VOP_ISSEEKABLE(file->of_vnode)){
-		kprintf("\nBawal abar aache");
-		return 1;
-	}
+	
 	
 	lock_acquire(file->of_offsetlock);
 	if(file->of_accmode == O_RDONLY){
