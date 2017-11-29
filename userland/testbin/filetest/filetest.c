@@ -64,31 +64,11 @@ main(int argc, char *argv[])
 	}
 
 	fd = open(file, O_WRONLY|O_CREAT|O_TRUNC, 0664);
-	if (fd<0) {
-		err(1, "%s: open for write", file);
-	}
-
-
 	rv = write(fd, writebuf, 40);
-	if (rv<0) {
-		err(1, "%s: write", file);
-	}
-
 	rv = close(fd);
-	if (rv<0) {
-		err(1, "%s: close (1st time)", file);
-	}
-
+	
 	fd = open(file, O_RDONLY);
-	if (fd<0) {
-		err(1, "%s: open for read", file);
-	}
-
 	rv = read(fd, readbuf, 40);
-	if (rv<0) {
-		err(1, "%s: read", file);
-	}
-
 	rv = close(fd);
 
 	return 0;
