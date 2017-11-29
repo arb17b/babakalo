@@ -63,7 +63,7 @@ main(int argc, char *argv[])
 		errx(1, "Usage: filetest <filename>");
 	}
 	fd = open(file, O_RDONLY);
-	rv = read(fd, readbuf, 40);
+	rv = close(fd);
 	printf("Passed filetest. with %d \n", rv);
 	return 0;
 }
