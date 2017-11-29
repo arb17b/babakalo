@@ -92,7 +92,7 @@ sys_read(int fd, userptr_t buf, size_t size, int *retval)
 	   return result;
 	}
 	
-	if(!vop_isseekable(file->of_vnode)){
+	if(!VOP_ISSEEKABLE(file->of_vnode)){
 		kprintf("\nBawal abar aache");
 		return 1;
 	}
@@ -107,7 +107,7 @@ sys_read(int fd, userptr_t buf, size_t size, int *retval)
 	uio_kinit(&io, &reader, &buf, size, file->of_offset, UIO_READ);
 	reader.uio_segflg = UIO_USERSPACE;
 	reader.uio_space = curproc->p_addrspace;
-	result = vop_read(file->of_vnode, reader);
+	result = VOP_READ(file->of_vnode, reader);
 	*retval = size - reader.uio_resid;
 	lock_release(file->of_offsetlock);
 	filetable_put(curproc->p_filetable,fd, file);
