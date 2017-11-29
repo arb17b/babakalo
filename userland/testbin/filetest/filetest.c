@@ -67,6 +67,6 @@ main(int argc, char *argv[])
 	rv = close(fd);
 	if(rv){
 	}
-	//printf("Passed filetest. with %d \n", rv);
+	printf("Passed filetest. with %d \n", rv);
 	return 0;
 }
