@@ -46,7 +46,7 @@
 int
 main(int argc, char *argv[])
 {
-	//static char writebuf[40] = "Twiddle dee dee, Twiddle dum dum.......\n";
+	static char writebuf[40] = "Twiddle dee dee, Twiddle dum dum.......\n";
 	static char readbuf[41];
 
 	const char *file;
@@ -62,11 +62,49 @@ main(int argc, char *argv[])
 	else {
 		errx(1, "Usage: filetest <filename>");
 	}
-	fd = open(file, O_RDONLY);
-	rv = read(fd, readbuf, 40);
-	rv = close(fd);
-	if(rv){
+
+	fd = open(file, O_WRONLY|O_CREAT|O_TRUNC, 0664);
+	if (fd<0) {
+		err(1, "%s: open for write", file);
 	}
-	printf("Passed filetest. with %d \n", rv);
+
+
+	rv = write(fd, writebuf, 40);
+	if (rv<0) {
+		err(1, "%s: write", file);
+	}
+
+	rv = close(fd);
+	if (rv<0) {
+		err(1, "%s: close (1st time)", file);
+	}
+
+	fd = open(file, O_RDONLY);
+	if (fd<0) {
+		err(1, "%s: open for read", file);
+	}
+
+	rv = read(fd, readbuf, 40);
+	if (rv<0) {
+		err(1, "%s: read", file);
+	}
+
+	rv = close(fd);
+	printf("Closing fd=%d retval=%d.\n", fd, rv);
+	if (rv<0) {
+		err(1, "%s: close (2nd time)", file);
+	}
+	/* ensure null termination */
+	readbuf[40] = 0;
+
+	if (strcmp(readbuf, writebuf)) {
+		errx(1, "Buffer data mismatch!");
+	}
+
+/*	rv = remove(file);
+	if (rv<0) {
+		err(1, "%s: remove", file);
+	} */
+	printf("Passed filetest.\n");
 	return 0;
 }
