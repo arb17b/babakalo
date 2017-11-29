@@ -77,13 +77,39 @@ sys_open(const_userptr_t upath, int flags, mode_t mode, int *retval)
 int
 sys_read(int fd, userptr_t buf, size_t size, int *retval)
 {
-       int result = 0;
+        int result = 0;
 
        /* 
         * Your implementation of system call read starts here.  
         *
         * Check the design document design/filesyscall.txt for the steps
         */
+	struct openfile* file;
+	result = filetable_get(curproc->p_filetable, fd, &file);
+	
+	if(result){
+	   kprintf("\nBawal aache");
+	   return result;
+	}
+	
+	if(!vop_isseekable(file->of_vnode)){
+		kprintf("\nBawal abar aache");
+		return 1;
+	}
+	
+	lock_acquire(file->of_offsetlock);
+	if(file->of_accmode == O_WRONLY){
+		kprintf("\nBnara file khulechish write er jonno be!");
+		return 1;
+	}
+	struct uio reader;
+	struct iovec io;
+	uio_kinit(&io, &reader, &buf, size, file->of_offset, UIO_READ);
+	reader->uio_segflg = UIO_USERSPACE;
+	reader->uio_space = curproc->p_addrspace;
+	result = vop_read(file->of_vnode, reader);
+	
+	   
 	
        (void) fd; // suppress compilation warning until code gets written
        (void) buf; // suppress compilation warning until code gets written
