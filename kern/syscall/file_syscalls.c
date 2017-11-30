@@ -273,5 +273,5 @@ sys_meld(const_userptr_t upath1, const_userptr_t upath2, const_userptr_t upath3,
 		return result;
 	l2 = 2048 - ui3.uio_resid;
 	*retval = 0;
-	return = 0;
+	return 0;
 }
