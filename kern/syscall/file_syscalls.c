@@ -271,7 +271,7 @@ sys_meld(const_userptr_t upath1, const_userptr_t upath2, const_userptr_t upath3,
 	result = VOP_WRITE(file3->of_vnode, &ui3);
 	if(result)
 		return result;
-	l2 = 2048 - ui3.uio.resid;
+	l2 = 2048 - ui3.uio_resid;
 	*retval = 0;
 	return = 0;
 }
