@@ -204,3 +204,26 @@ sys_close(int fd){
 /* 
 * meld () - combine the content of two files word by word into a new file
 */
+
+int 
+sys_meld(const_userptr_t upath1, const_userptr_t upath2, const_userptr_t upath3, int *retval){
+	
+	int fd1, fd2, fd3;
+	struct openfile *file1;
+	struct openfile *file2;
+	struct openfile *file3;
+	
+	char* duffer1 = kmalloc(1024);
+	char* duffer2 = kmalloc(1024);
+	char* duffer3 = kmalloc(2048);
+	
+	struct iovec iov1, iov2, iov3;
+	struct uio ui1, ui2, ui3;
+	
+	int i, err, result;
+	int l1, l2;
+	
+	result = sys_open(pn1,O_RDONLY, 0664, 
+	
+	
+}
