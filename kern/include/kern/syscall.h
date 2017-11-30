@@ -114,6 +114,7 @@
 #define SYS_getdirentry  54
 #define SYS_write        55
 #define SYS_pwrite       56
+#define SYS_meld         57
 //#define SYS_writev     57
 //#define SYS_pwritev    58
 #define SYS_lseek        59
