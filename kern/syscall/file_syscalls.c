@@ -268,10 +268,10 @@ sys_meld(const_userptr_t upath1, const_userptr_t upath2, const_userptr_t upath3,
 		duffer3[i*8 + 7] = duffer2[i*4 + 3];
 	}
 	uio_kinit(&iov3, &ui3, duffer3, 2048, 0, UIO_WRITE);
-	result = VOP_WRITE(file->of_vnode, &ui3);
+	result = VOP_WRITE(file3->of_vnode, &ui3);
 	if(result)
 		return result;
-	len2 = 2048 - ui3.uio.resid;
+	l2 = 2048 - ui3.uio.resid;
 	*retval = 0;
 	return = 0;
 }
