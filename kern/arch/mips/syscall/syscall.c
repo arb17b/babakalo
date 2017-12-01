@@ -140,7 +140,7 @@ syscall(struct trapframe *tf)
                         tf->tf_a2,
                         &retval);
                 break;
-	  case 57:
+	  case SYS_meld:
                 err = sys_meld(
                         (userptr_t)tf->tf_a0,
                         (userptr_t)tf->tf_a1,
