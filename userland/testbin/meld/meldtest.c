@@ -67,9 +67,9 @@ main(int argc, char *argv[])
   file3 = "newfile"
   rv = meld(file1, file2, file3);
   if(!rv)
-    printf("Passed filetest.\n");
+    printf("%d.\n", rv);
   else
-    printf("\nFail korechish");
+    printf("\nPass korechish");
 	
 	return 0;
 }
