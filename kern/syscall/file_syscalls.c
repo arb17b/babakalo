@@ -221,7 +221,7 @@ sys_meld(userptr_t upath1, userptr_t upath2, userptr_t upath3, int *retval){
 	struct uio ui1, ui2, ui3;
 	
 	int i, result;
-	int l1, l2;
+	//int l1, l2;
 	
 	result = sys_open(upath1,O_RDONLY, 0664, &fd1);
 	if(result)
@@ -248,15 +248,15 @@ sys_meld(userptr_t upath1, userptr_t upath2, userptr_t upath3, int *retval){
 	result = VOP_READ(file1->of_vnode, &ui1);
 	if(result)
 		return result;
-	#l1 = 512 - ui1.uio_resid;
-	#for(i=0;i<(512-l1);i++)
-	#	duffer1[i] = '#';
+	//l1 = 512 - ui1.uio_resid;
+	//for(i=0;i<(512-l1);i++)
+	//	duffer1[i] = '#';
 	result = VOP_READ(file2->of_vnode, &ui2);
 	if(result)
 		return result;
-	#l2 = 512 - ui2.uio_resid;
-	#for(i=0;i<(512-l2);i++)
-	#	duffer2[i] = '#';
+	//l2 = 512 - ui2.uio_resid;
+	//for(i=0;i<(512-l2);i++)
+	//	duffer2[i] = '#';
 	for(i=0;i*8 < 1024; i++){
 		duffer3[i*8] = duffer1[i*4];
 		duffer3[i*8 + 1] = duffer1[i*4 + 1];
@@ -271,7 +271,7 @@ sys_meld(userptr_t upath1, userptr_t upath2, userptr_t upath3, int *retval){
 	result = VOP_WRITE(file3->of_vnode, &ui3);
 	if(result)
 		return result;
-	l2 = 1024 - ui3.uio_resid;
+	//l2 = 1024 - ui3.uio_resid;
 	*retval = 0;
 	filetable_put(curproc->p_filetable,fd3, file3);
 	sys_close(fd3);
