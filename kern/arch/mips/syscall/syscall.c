@@ -100,6 +100,7 @@ syscall(struct trapframe *tf)
 	 */
 
 	retval = 0;
+	kprintf("%d",callno);
 	switch (callno) {
 	    case SYS_reboot:
 		err = sys_reboot(tf->tf_a0);
@@ -138,7 +139,7 @@ syscall(struct trapframe *tf)
                         tf->tf_a2,
                         &retval);
                 break;
-	case 57:
+	  case 57:
                 err = sys_meld(
                         tf->tf_a0,
                         tf->tf_a1,
