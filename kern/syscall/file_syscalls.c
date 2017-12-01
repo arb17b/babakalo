@@ -213,9 +213,9 @@ sys_meld(userptr_t upath1, userptr_t upath2, userptr_t upath3, int *retval){
 	struct openfile *file2;
 	struct openfile *file3;
 	
-	char* duffer1 = kmalloc(1024);
-	char* duffer2 = kmalloc(1024);
-	char* duffer3 = kmalloc(2048);
+	char* duffer1 = kmalloc(512);
+	char* duffer2 = kmalloc(512);
+	char* duffer3 = kmalloc(1024);
 	
 	struct iovec iov1, iov2, iov3;
 	struct uio ui1, ui2, ui3;
@@ -242,22 +242,22 @@ sys_meld(userptr_t upath1, userptr_t upath2, userptr_t upath3, int *retval){
 	if(result)
 		return result;
 	
-	uio_kinit(&iov1, &ui1, duffer1, 1024, 0, UIO_READ);
-	uio_kinit(&iov2, &ui2, duffer2, 1024, 0, UIO_READ);
+	uio_kinit(&iov1, &ui1, duffer1, 512, 0, UIO_READ);
+	uio_kinit(&iov2, &ui2, duffer2, 512, 0, UIO_READ);
 	
 	result = VOP_READ(file1->of_vnode, &ui1);
 	if(result)
 		return result;
-	l1 = 1024 - ui1.uio_resid;
-	for(i=0;i<(1024-l1);i++)
+	l1 = 512 - ui1.uio_resid;
+	for(i=0;i<(512-l1);i++)
 		duffer1[i] = ' ';
 	result = VOP_READ(file2->of_vnode, &ui2);
 	if(result)
 		return result;
-	l2 = 1024 - ui2.uio_resid;
-	for(i=0;i<(1024-l2);i++)
+	l2 = 512 - ui2.uio_resid;
+	for(i=0;i<(512-l2);i++)
 		duffer2[i] = ' ';
-	for(i=0;(i*8 < 2048); i++){
+	for(i=0;(i*8 < 1024); i++){
 		duffer3[i*8] = duffer1[i*4];
 		duffer3[i*8 + 1] = duffer1[i*4 + 1];
 		duffer3[i*8 + 2] = duffer1[i*4 + 2];
@@ -267,11 +267,17 @@ sys_meld(userptr_t upath1, userptr_t upath2, userptr_t upath3, int *retval){
 		duffer3[i*8 + 6] = duffer2[i*4 + 2];
 		duffer3[i*8 + 7] = duffer2[i*4 + 3];
 	}
-	uio_kinit(&iov3, &ui3, duffer3, 2048, 0, UIO_WRITE);
+	uio_kinit(&iov3, &ui3, duffer3, 1024, 0, UIO_WRITE);
 	result = VOP_WRITE(file3->of_vnode, &ui3);
 	if(result)
 		return result;
 	l2 = 2048 - ui3.uio_resid;
 	*retval = 0;
+	filetable_put(curproc->p_filetable,fd3, file);
+	sys_close(fd3);
+	filetable_put(curproc->p_filetable,fd2, file);
+	sys_close(fd2);
+	filetable_put(curproc->p_filetable,fd1, file);
+	sys_close(fd1);
 	return 0;
 }
