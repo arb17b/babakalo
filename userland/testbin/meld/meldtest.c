@@ -49,22 +49,22 @@ main(int argc, char *argv[])
 	static char writebuf[40] = "CIGAR\n";
 	static char readbuf[41];
 
-	const char *file1, file2, file3;
+	const char *file1, *file2, *file3;
 	int rv;
 
 	if (argc == 0) {
 		/*warnx("No arguments - running on \"testfile\"");*/
 		file1 = "testfile";
-    file2 = "testfile"
+    		file2 = "testfile";
 	}
 	else if (argc == 2) {
 		file1 = argv[1];
-    file2 = argv[2];
+    		file2 = argv[2];
 	}
 	else {
 		errx(1, "Usage: filetest <filename> <filename>");
 	}
-  file3 = "newfile"
+  file3 = "newfile";
   rv = meld(file1, file2, file3);
   if(!rv)
     printf("%d.\n", rv);
