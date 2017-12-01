@@ -46,8 +46,8 @@
 int
 main(int argc, char *argv[])
 {
-	static char writebuf[40] = "CIGAR\n";
-	static char readbuf[41];
+	//static char writebuf[40] = "CIGAR\n";
+	//static char readbuf[41];
 
 	const char *file1, *file2, *file3;
 	int rv;
