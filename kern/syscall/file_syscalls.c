@@ -271,7 +271,7 @@ sys_meld(userptr_t upath1, userptr_t upath2, userptr_t upath3, int *retval){
 	result = VOP_WRITE(file3->of_vnode, &ui3);
 	if(result)
 		return result;
-	l2 = 2048 - ui3.uio_resid;
+	l2 = 1024 - ui3.uio_resid;
 	*retval = 0;
 	filetable_put(curproc->p_filetable,fd3, file);
 	sys_close(fd3);
