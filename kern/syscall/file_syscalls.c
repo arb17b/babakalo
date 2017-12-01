@@ -206,7 +206,7 @@ sys_close(int fd){
 */
 
 int 
-sys_meld(const_userptr_t upath1, const_userptr_t upath2, const_userptr_t upath3, int *retval){
+sys_meld(userptr_t upath1, userptr_t upath2, userptr_t upath3, int *retval){
 	
 	int fd1, fd2, fd3;
 	struct openfile *file1;
