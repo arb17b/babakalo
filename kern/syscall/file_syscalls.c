@@ -273,11 +273,11 @@ sys_meld(userptr_t upath1, userptr_t upath2, userptr_t upath3, int *retval){
 		return result;
 	l2 = 1024 - ui3.uio_resid;
 	*retval = 0;
-	filetable_put(curproc->p_filetable,fd3, file);
+	filetable_put(curproc->p_filetable,fd3, file3);
 	sys_close(fd3);
-	filetable_put(curproc->p_filetable,fd2, file);
+	filetable_put(curproc->p_filetable,fd2, file2);
 	sys_close(fd2);
-	filetable_put(curproc->p_filetable,fd1, file);
+	filetable_put(curproc->p_filetable,fd1, file1);
 	sys_close(fd1);
 	return 0;
 }
