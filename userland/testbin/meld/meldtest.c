@@ -54,12 +54,12 @@ main(int argc, char *argv[])
 
 	if (argc == 0) {
 		/*warnx("No arguments - running on \"testfile\"");*/
-		file1 = "testfile";
-    		file2 = "testfile";
+		file1 = "test1";
+    		file2 = "test2";
 	}
 	else if (argc == 2) {
-		file1 = argv[1];
-    		file2 = argv[2];
+		file1 = argv[0];
+    		file2 = argv[1];
 	}
 	else {
 		errx(1, "Usage: filetest <filename> <filename>");
